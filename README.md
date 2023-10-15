@@ -8,14 +8,10 @@ This team project is part of the ALX School Software Engineering program. It rep
 
 ## Description of the command interpreter
 
-1. How to start it
-2. How to use it
-3. Examples
-
 This first step consists of:
 
-- a custom command-line interface for data management,
-- and the base classes for the storage of this data.
+- A custom command-line interface for data management,
+- The base classes for the storage of this data.
 
 ## Usage ���
 

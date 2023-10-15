@@ -6,6 +6,7 @@
     "objdict",
     "objl",
     "retl",
+    "sqlalchemy",
     "valtype"
   ]
 }

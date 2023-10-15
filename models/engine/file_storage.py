@@ -62,6 +62,7 @@ class FileStorage:
             pass
 
     def delete(self, obj=None):
+        # sourcery skip: use-contextlib-suppress, use-fstring-for-formatting
         """Delete a given object from __objects, if it exists."""
         try:
             del self.__objects["{}.{}".format(type(obj).__name__, obj.id)]

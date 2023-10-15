@@ -24,45 +24,32 @@ from models.amenity import Amenity
 
 from models.review import Review
 
-
-
-
-
 def parse(arg):
 
     curly_braces = re.search(r"\{(.*?)\}", arg)
 
     brackets = re.search(r"\[(.*?)\]", arg)
 
-    if curly_braces is None:
+    if curly_braces is not None:
+        return _extracted_from_parse_15(arg, curly_braces)
+    if brackets is None:
 
-        if brackets is None:
-
-            return [i.strip(",") for i in split(arg)]
-
-        else:
-
-            lexer = split(arg[:brackets.span()[0]])
-
-            retl = [i.strip(",") for i in lexer]
-
-            retl.append(brackets.group())
-
-            return retl
+        return [i.strip(",") for i in split(arg)]
 
     else:
 
-        lexer = split(arg[:curly_braces.span()[0]])
-
-        retl = [i.strip(",") for i in lexer]
-
-        retl.append(curly_braces.group())
-
-        return retl
+        return _extracted_from_parse_15(arg, brackets)
 
 
+# TODO Rename this here and in `parse`
+def _extracted_from_parse_15(arg, arg1):
+    lexer = split(arg[:arg1.span()[0]])
 
+    retl = [i.strip(",") for i in lexer]
 
+    retl.append(arg1.group())
+
+    return retl
 
 class HBNBCommand(cmd.Cmd):
 
@@ -73,8 +60,6 @@ class HBNBCommand(cmd.Cmd):
         prompt (str): The command prompt.
 
     """
-
-
 
     prompt = "(hbnb) "
 
@@ -96,15 +81,11 @@ class HBNBCommand(cmd.Cmd):
 
     }
 
-
-
     def emptyline(self):
 
         """Do nothing upon receiving an empty line."""
 
         pass
-
-
 
     def default(self, arg):
 
@@ -132,17 +113,17 @@ class HBNBCommand(cmd.Cmd):
 
             match = re.search(r"\((.*?)\)", argl[1])
 
-            if match is not None:
+        if match is not None:
 
-                command = [argl[1][:match.span()[0]], match.group()[1:-1]]
+            command = [argl[1][:match.span()[0]], match.group()[1:-1]]
 
-                if command[0] in argdict.keys():
+            if command[0] in argdict:
 
-                    call = "{} {}".format(argl[0], command[1])
+                call = f"{argl[0]} {command[1]}"
 
-                    return argdict[command[0]](call)
+                return argdict[command[0]](call)
 
-        print("*** Unknown syntax: {}".format(arg))
+        print(f"*** Unknown syntax: {arg}")
 
         return False
 
@@ -216,13 +197,13 @@ class HBNBCommand(cmd.Cmd):
 
             print("** instance id missing **")
 
-        elif "{}.{}".format(argl[0], argl[1]) not in objdict:
+        elif f"{argl[0]}.{argl[1]}" not in objdict:
 
             print("** no instance found **")
 
         else:
 
-            print(objdict["{}.{}".format(argl[0], argl[1])])
+            print(objdict[f"{argl[0]}.{argl[1]}"])
 
 
 
@@ -248,13 +229,13 @@ class HBNBCommand(cmd.Cmd):
 
             print("** instance id missing **")
 
-        elif "{}.{}".format(argl[0], argl[1]) not in objdict.keys():
+        elif f"{argl[0]}.{argl[1]}" not in objdict.keys():
 
             print("** no instance found **")
 
         else:
 
-            del objdict["{}.{}".format(argl[0], argl[1])]
+            del objdict[f"{argl[0]}.{argl[1]}"]
 
             storage.save()
 
@@ -300,18 +281,12 @@ class HBNBCommand(cmd.Cmd):
 
         argl = parse(arg)
 
-        count = 0
-
-        for obj in storage.all().values():
-
-            if argl[0] == obj.__class__.__name__:
-
-                count += 1
-
+        count = sum(
+            1
+            for obj in storage.all().values()
+            if argl[0] == obj.__class__.__name__
+        )
         print(count)
-
-
-
     def do_update(self, arg):
 
         """Usage: update <class> <id> <attribute_name> <attribute_value> or
@@ -348,7 +323,7 @@ class HBNBCommand(cmd.Cmd):
 
             return False
 
-        if "{}.{}".format(argl[0], argl[1]) not in objdict.keys():
+        if f"{argl[0]}.{argl[1]}" not in objdict.keys():
 
             print("** no instance found **")
 
@@ -376,7 +351,7 @@ class HBNBCommand(cmd.Cmd):
 
         if len(argl) == 4:
 
-            obj = objdict["{}.{}".format(argl[0], argl[1])]
+            obj = objdict[f"{argl[0]}.{argl[1]}"]
 
             if argl[2] in obj.__class__.__dict__.keys():
 
@@ -390,7 +365,7 @@ class HBNBCommand(cmd.Cmd):
 
         elif type(eval(argl[2])) == dict:
 
-            obj = objdict["{}.{}".format(argl[0], argl[1])]
+            obj = objdict[f"{argl[0]}.{argl[1]}"]
 
             for k, v in eval(argl[2]).items():
 
@@ -407,7 +382,6 @@ class HBNBCommand(cmd.Cmd):
                     obj.__dict__[k] = v
 
         storage.save()
-
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()

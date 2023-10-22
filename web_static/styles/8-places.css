@@ -1,0 +1,51 @@
+/* 
+========================================
+Places class
+========================================
+*/
+.places h1 {
+  text-align: left;
+  font-size: 30px;
+  font-weight: bold;
+  width: 100%;
+  margin: 0.67em 0 0.67em 0;
+}
+
+.places article {
+  width: 390px;
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ff5a5f;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.places h2 {
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* 
+========================================
+Places article class
+========================================
+*/
+.places .price_by_night p {
+  color: #ff5a5f;
+  border: 4px solid #ff5a5f;
+  border-radius: 50%;
+  min-width: 60px;
+  height: 60px;
+  font-size: 30px;
+  margin: 0000;
+  float: right;
+  text-align: center;
+  margin: -1em 0 0 0;
+  padding: 0.3em 0 0.3em 0.3em;
+}
+
+align: the top right (with space);

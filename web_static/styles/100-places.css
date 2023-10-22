@@ -177,3 +177,36 @@ text-align: start;
 .places .amenities ul > li:nth-child(3)::before {
   background-image: url("../images/icon_pets.png");
 }
+
+/* 
+========================================
+Reviews section
+========================================
+*/
+
+.places .reviews {
+    margin: 40px auto auto auto;
+}
+
+.places .reviews h2{
+font-size: 16px;
+border-bottom: 1px solid #DDDDDD;
+text-align: start;
+/* margin: 0 0 10px 0; */
+}
+
+.places .reviews ul{
+    list-style: none;
+    margin: 10px auto 10px 10px;
+}
+
+/* typography */
+.places .reviews h3{
+    font-size: 14px;
+    font-weight: bold;
+    margin: 10px auto auto auto;
+}
+
+.places .reviews p{
+    font-size: 12px;
+}
